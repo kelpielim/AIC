@@ -49,12 +49,7 @@
 			instrument: "acoustic_grand_piano",
 			onsuccess: function() {
 				MIDI.setVolume(0, 127);
-				MIDI.noteOn(0, leftnote, 127, 1);
-				MIDI.noteOff(0, leftnote, 2.5);
-				MIDI.noteOn(0, centernote, 127, 1.5);
-				MIDI.noteOff(0, centernote, 2.5);
-				MIDI.noteOn(0, rightnote, 127, 2);
-				MIDI.noteOff(0, rightnote, 2.5);
+				window.alert("F4, G4, A5 loaded!");	
 	  
 			}
 		});
