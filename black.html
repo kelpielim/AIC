@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<!-- set viewport to native resolution (android) - disable zoom !-->
+   <meta 
+       name="viewport" 
+       content="target-densitydpi=device-dpi; width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" 
+    />
+
+	<!-- load styles -->
+	<link rel="stylesheet" href="AICstyles.CSS">
+
+	<!-- shims -->
+	<script src="./inc/shim/Base64.js" type="text/javascript"></script>
+	<script src="./inc/shim/Base64binary.js" type="text/javascript"></script>
+	<script src="./inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+	<!-- midi.js -->
+	<script src="./js/midi/audioDetect.js" type="text/javascript"></script>
+	<script src="./js/midi/gm.js" type="text/javascript"></script>
+	<script src="./js/midi/loader.js" type="text/javascript"></script>
+	<script src="./js/midi/plugin.audiotag.js" type="text/javascript"></script>
+	<script src="./js/midi/plugin.webaudio.js" type="text/javascript"></script>
+	<script src="./js/midi/plugin.webmidi.js" type="text/javascript"></script>
+	<!-- utils -->
+	<script src="./js/util/dom_request_xhr.js" type="text/javascript"></script>
+	<script src="./js/util/dom_request_script.js" type="text/javascript"></script>
+	
+	<!-- catch long press on Android screens -->
+	<script>
+	function mynote(buttonpress) {
+		if (buttonpress == "left") {
+		   return 48;
+		} else if (buttonpress == "center") {
+		   return 50;
+		} else {
+		   return 52;
+		}
+	}
+		
+	window.onload = function () {
+		MIDI.loadPlugin({
+			soundfontUrl: "./soundfont/",
+			instrument: "acoustic_grand_piano",
+			onsuccess: function() {
+				MIDI.setVolume(0, 127);
+				MIDI.noteOn(0, 48, 127);
+				MIDI.noteOff(0, 48);	  
+			}
+		});
+	};
+
+	window.oncontextmenu = function(event) {
+    	event.preventDefault();
+     	event.stopPropagation();
+     	return false;
+	};
+
+	function playLNote() {MIDI.noteOn(0,mynote("left"),127)};
+	function stopLNote() {MIDI.noteOff(0,mynote("left"))};
+	function playMNote() {MIDI.noteOn(0,mynote("center"),127)};
+	function stopMNote() {MIDI.noteOff(0,mynote("center"))};
+	function playRNote() {MIDI.noteOn(0,mynote("right"),127)};
+	function stopRNote() {MIDI.noteOff(0,mynote("right"))};
+		
+	</script>
+</head>
+
+<body>
+
+<script>
+
+</script>
+
+<div style="display:table;">
+<div class="myButton myButtonBlue" id="ButtonL" ontouchstart="playLNote()" ontouchend="stopLNote()"><img src="left.png" /></div>
+<div class="myButton myButtonBlue" id="ButtonM" ontouchstart="playMNote()" ontouchend="stopMNote()"><img src="center.png" /></div>
+<div class="myButton myButtonBlue" id="ButtonR" ontouchstart="playRNote()" ontouchend="stopRNote()"><img src="right.png" /></div>
+</div>
+
+</body>
+</html>
